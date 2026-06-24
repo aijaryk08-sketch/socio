@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socio App UI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- 1. CSS СТИЛДЕРҮҮ --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        /* Мобилдик экрандын контейнери */
+        .mobile-container {
+            width: 100%;
+            max-width: 410px; /* iPhone 16/17 Pro өлчөмүнө жакын */
+            background-color: #ebf2f2;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            padding-bottom: 75px;
+        }
+
+        /* Шапка */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+        }
+
+        .header i {
+            font-size: 20px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            color: #333;
+        }
+
+        /* Баннер */
+        .welcome-banner {
+            background-color: #79cbba;
+            margin: 0 20px;
+            padding: 20px;
+            border-radius: 12px;
+            color: #1e3932;
+        }
+
+        .welcome-banner h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .welcome-banner p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* Тез аракеттер */
+        .action-icons {
+            display: flex;
+            justify-content: space-between;
+            padding: 24px 28px;
+        }
+
+        .action-icons button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #555;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        /* Статистика */
+        .stats-card {
+            background-color: #ffffff;
+            margin: 0 20px 20px 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-around;
+            padding: 20px 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stat-item i {
+            font-size: 18px;
+            color: #666;
+        }
+
+        .stat-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Посттордун тизмеси */
+        .posts-list {
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .post-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Иконкалар үчүн фон түстөрү */
+        .post-media {
+            width: 55px;
+            height: 55px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            background-color: #fff;
+        }
+
+        .mountain-bg { background-color: #e2f3ee; }
+        .coffee-bg { background-color: #f7ede2; }
+        .sunset-bg { background-color: #fef6e4; }
+
+        .text-green { color: #52b788; }
+        .text-brown { color: #b07d62; }
+        .text-orange { color: #f4a261; }
+
+        /* Маалыматтар */
+        .post-details {
+            flex-grow: 1;
+        }
+
+        .post-details h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 2px;
+        }
+
+        .date {
+            font-size: 11px;
+            color: #888;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .social-share {
+            display: flex;
+            gap: 10px;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .social-share i {
+            cursor: pointer;
+        }
+
+        .post-status {
+            font-size: 16px;
+            padding-right: 5px;
+        }
+
+        .status-done { color: #888; }
+        .status-pending { color: #aaa; }
+
+        /* Төмөнкү навигация */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 65px;
+            background-color: #e5eded;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .nav-item {
+            color: #777;
+            font-size: 18px;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .nav-item.active {
+            color: #333;
+        }
+
+        .add-btn {
+            background-color: #d1dede;
+            color: #444;
+            font-size: 16px;
+        }
+
+        /* Экран кичирейгенде толук сыйыш керек */
+        @media (max-width: 400px) {
+            .mobile-container {
+                border-radius: 0;
+                min-height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-container">
+        <header class="header">
+            <i class="fa-solid fa-bars" id="menuBtn"></i>
+            <h1 class="logo">SOCIO</h1>
+            <i class="fa-regular fa-bell" id="notiBtn"></i>
+        </header>
+
+        <div class="welcome-banner">
+            <h2>Салам! Жаңы күн.</h2>
+            <p><span id="post-count">10</span> активдүү пост</p>
+        </div>
+
+        <div class="action-icons" id="actionIcons">
+            <button><i class="fa-regular fa-image"></i></button>
+            <button><i class="fa-solid fa-video"></i></button>
+            <button><i class="fa-regular fa-face-smile"></i></button>
+            <button><i class="fa-solid fa-hashtag"></i></button>
+            <button><i class="fa-regular fa-calendar-days"></i></button>
+        </div>
+
+        <div class="stats-card">
+            <div class="stat-item">
+                <i class="fa-regular fa-eye"></i>
+                <span class="stat-value" id="stat-views">11,200</span>
+            </div>
+            <div class="stat-item">
+                <i class="fa-solid fa-users"></i>
+                <span class="stat-value">7,100</span>
+            </div>
+            <div class="stat-item">
+                <i class="fa-regular fa-comment-dots"></i>
+                <span class="stat-value">180</span>
+            </div>
+            <div class="stat-item">
+                <i class="fa-regular fa-heart"></i>
+                <span class="stat-value" id="stat-likes">900</span>
+            </div>
+        </div>
+
+        <div class="posts-list" id="postsContainer">
+            <div class="post-item">
+                <div class="post-media mountain-bg"><i class="fa-solid fa-mountain text-green"></i></div>
+                <div class="post-details">
+                    <h3>Тоолор</h3>
+                    <span class="date">27.05</span>
+                    <div class="social-share">
+                        <i class="fa-brands fa-facebook-f"></i><i class="fa-brands fa-instagram"></i><i class="fa-brands fa-telegram"></i>
+                    </div>
+                </div>
+                <div class="post-status"><i class="fa-solid fa-check status-done"></i></div>
+            </div>
+
+            <div class="post-item">
+                <div class="post-media coffee-bg"><i class="fa-solid fa-mug-hot text-brown"></i></div>
+                <div class="post-details">
+                    <h3>Кофе тыныгуу</h3>
+                    <span class="date">27.05</span>
+                    <div class="social-share">
+                        <i class="fa-brands fa-facebook-f"></i><i class="fa-brands fa-instagram"></i><i class="fa-brands fa-telegram"></i>
+                    </div>
+                </div>
+                <div class="post-status"><i class="fa-regular fa-clock status-pending"></i></div>
+            </div>
+        </div>
+
+        <nav class="bottom-nav" id="bottomNav">
+            <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i></a>
+            <a href="#" class="nav-item"><i class="fa-regular fa-file-lines"></i></a>
+            <a href="#" class="nav-item add-btn" id="addPostBtn"><i class="fa-solid fa-plus"></i></a>
+            <a href="#" class="nav-item"><i class="fa-regular fa-calendar"></i></a>
+            <a href="#" class="nav-item"><i class="fa-regular fa-user"></i></a>
+        </nav>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // Навигация менюсун алмаштыруу эффекти
+            const navItems = document.querySelectorAll("#bottomNav .nav-item:not(.add-btn)");
+            navItems.forEach(item => {
+                item.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    document.querySelector("#bottomNav .nav-item.active")?.classList.remove("active");
+                    item.classList.add("active");
+                });
+            });
+
+            // Үстүндөгү тез аракет баскычтарын басканда кичинекей анимация
+            const actionButtons = document.querySelectorAll("#actionIcons button");
+            actionButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    button.style.transform = "scale(0.85)";
+                    setTimeout(() => button.style.transform = "scale(1)", 150);
+                });
+            });
+
+            // Плюс (+) баскычын басканда жаңы пост кошуу
+            const addPostBtn = document.getElementById("addPostBtn");
+            const postsContainer = document.getElementById("postsContainer");
+            const postCountEl = document.getElementById("post-count");
+            const viewsStat = document.getElementById("stat-views");
+            const likesStat = document.getElementById("stat-likes");
+
+            let currentPostCount = 10;
+            const mockPosts = [
+                { title: "Түнкү шаар", icon: "fa-city", bg: "sunset-bg", color: "text-orange" },
+                { title: "Саякат убактысы", icon: "fa-plane", bg: "mountain-bg", color: "text-green" },
+                { title: "Жаңы китеп", icon: "fa-book", bg: "coffee-bg", color: "text-brown" },
+                { title: "Спорт залы", icon: "fa-dumbbell", bg: "mountain-bg", color: "text-orange" }
+            ];
+
+            addPostBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+
+                const randomIndex = Math.floor(Math.random() * mockPosts.length);
+                const randomPost = mockPosts[randomIndex];
+
+                const postItem = document.createElement("div");
+                postItem.classList.add("post-item");
+                
+                // Анимация стили
+                postItem.style.opacity = "0";
+                postItem.style.transform = "translateY(10px)";
+                postItem.style.transition = "all 0.3s ease";
+
+                postItem.innerHTML = `
+                    <div class="post-media ${randomPost.bg}">
+                        <i class="fa-solid ${randomPost.icon} ${randomPost.color}"></i>
+                    </div>
+                    <div class="post-details">
+                        <h3>${randomPost.title}</h3>
+                        <span class="date">Жаңы кошулду</span>
+                        <div class="social-share">
+                            <i class="fa-brands fa-facebook-f"></i>
+                            <i class="fa-brands fa-instagram"></i>
+                            <i class="fa-brands fa-telegram"></i>
+                        </div>
+                    </div>
+                    <div class="post-status">
+                        <i class="fa-regular fa-clock status-pending"></i>
+                    </div>
+                `;
+
+                postsContainer.prepend(postItem);
+
+                setTimeout(() => {
+                    postItem.style.opacity = "1";
+                    postItem.style.transform = "translateY(0)";
+                }, 50);
+
+                // Статистикаларды жаңылоо
+                currentPostCount++;
+                postCountEl.textContent = currentPostCount;
+
+                let currentViews = parseInt(viewsStat.textContent.replace(",", ""));
+                let currentLikes = parseInt(likesStat.textContent.replace(",", ""));
+                
+                viewsStat.textContent = (currentViews + Math.floor(Math.random() * 100) + 50).toLocaleString();
+                likesStat.textContent = (currentLikes + Math.floor(Math.random() * 15) + 5).toLocaleString();
+            });
+
+            // Жөнөкөй кулактандыруулар
+            document.getElementById("menuBtn").addEventListener("click", () => alert("Каптал меню ачылды!"));
+            document.getElementById("notiBtn").addEventListener("click", () => alert("Билдирүүлөр кутусу бош."));
+        });
+    </script>
+</body>
+</html>
